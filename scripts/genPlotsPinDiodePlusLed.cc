@@ -33,6 +33,8 @@ struct THFInfo
 	double pulse[2000][10];
 };
 
+int main()
+
 void genPlotsPinDiodePlusLed(int verb)
 {
 	TCalibLedInfo calibInfo;
