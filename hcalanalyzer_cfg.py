@@ -7,11 +7,23 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
+#
+#	take care of input 
+#
+import sys
+if len(sys.argv)<4:
+	print "### ERROR: Input Error!"
+	print "### Exiting..."
+	sys.exit(1)
+
+runNumber = sys.argv[2]
+comment = sys.argv[3]
+
 process.source = cms.Source("HcalTBSource",
     # replace 'myfile.root' with the source file you want to use
     fileNames = cms.untracked.vstring(
-#		'root://eoscms//eos/cms/store/group/comm_hcal/LS1/USC_226003.root'
-		'root://eoscms//eos/cms/store/group/comm_hcal/LS1/USC_229465.root'
+		'root://eoscms//eos/cms/store/group/comm_hcal/LS1/USC_%s.root' % (
+			runNumber)
     )
 )
 
@@ -35,9 +47,9 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
 		firstSample = cms.int32(0),
 		lastSample = cms.int32(9))
 
+outFile = 'ntuples_MagnetRampUp/HF_LED_%s_%s.root' % (runNumber, comment)
 process.hcalAnalyzer = cms.EDAnalyzer('HcalAnalyzer',
-		OutFileName = cms.untracked.string(
-			'ntuples_MagnetRampUp/HF_LED_229255.root'),
+		OutFileName = cms.untracked.string(outFile),
 		Verbosity = cms.untracked.int32(0)
 )
 
