@@ -300,8 +300,8 @@ void fit(TH1D *h)
 {
 	Double_t mean = h->GetMean();
 	Double_t rms = h->GetRMS();
-	Double_t min = mean-2*rms;
-	Double_t max = mean+2*rms;
+	Double_t min = mean-5*rms;
+	Double_t max = mean+5*rms;
 	TF1 *myGaus = new TF1("myGaus", "gaus", min, max);
 	h->SetLineColor(kBlack);
 	myGaus->SetLineColor(kRed);

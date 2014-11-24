@@ -11,7 +11,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 #	take care of input 
 #
 import sys
-if len(sys.argv)<5:
+if len(sys.argv)<6:
 	print "### ERROR: Input Error!"
 	print "### Exiting..."
 	sys.exit(1)
@@ -19,6 +19,7 @@ if len(sys.argv)<5:
 runNumber = sys.argv[2]
 comment = sys.argv[3]
 upDown = sys.argv[4]
+ledped = sys.argv[5]
 
 process.source = cms.Source("HcalTBSource",
     # replace 'myfile.root' with the source file you want to use
@@ -48,7 +49,8 @@ process.hcalDigis = cms.EDProducer("HcalRawToDigi",
 		firstSample = cms.int32(0),
 		lastSample = cms.int32(9))
 
-outFile = 'ntuples_MagnetRamp%s/HF_LED_%s_%s.root' % (upDown, runNumber, comment)
+outFile = 'ntuples_%s_MagnetRamp%s/HF_LED_%s_%s.root' % (
+		ledped, upDown, runNumber, comment)
 process.hcalAnalyzer = cms.EDAnalyzer('HcalAnalyzer',
 		OutFileName = cms.untracked.string(outFile),
 		Verbosity = cms.untracked.int32(0)
